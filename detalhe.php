@@ -1,33 +1,33 @@
 <?php require_once("../../connection/conexao.php"); ?>
-
 <?php
-    if(isset($_GET["codigo"])){
-        $produtoID = $_GET["codigo"];
+    if ( isset($_GET["codigo"]) ) {
+        $produto_id = $_GET["codigo"];
     } else {
         Header("Location: listagem.php");
     }
 
+    // Consulta ao banco de dados
     $consulta = "SELECT * ";
-    $consulta .= " FROM produtos ";
-    $consulta .= " WHERE produtoID = {$produtoID}";
-    $detalhe = mysqli_query($conecta,$consulta);
+    $consulta .= "FROM produtos ";
+    $consulta .= "WHERE produtoID = {$produto_id} ";
+    $detalhe    = mysqli_query($conecta,$consulta);
 
-    if(!$detalhe){
+    // Testar erro
+    if ( !$detalhe ) {
         die("Falha no Banco de dados");
     } else {
         $dados_detalhe = mysqli_fetch_assoc($detalhe);
-
-        $nomeproduto = $dados_detalhe["nomeproduto"];
-        $descriçao = $dados_detalhe["descricao"];
-        $codigobarra = $dados_detalhe["codigobarra"];
-        $tempoentrega = $dados_detalhe["tempoentrega"];
-        $precorevenda = $dados_detalhe["precorevenda"];
-        $precounitario = $dados_detalhe["precounitario"];
-        $estoque = $dados_detalhe["estoque"];
-        $imagemgrande = $dados_detalhe["imagemgrande"];
+        $produtoID      = $dados_detalhe["produtoID"];
+        $nomeproduto    = $dados_detalhe["nomeproduto"];
+        $descricao      = $dados_detalhe["descricao"];
+        $codigobarra    = $dados_detalhe["codigobarra"];
+        $tempoentrega   = $dados_detalhe["tempoentrega"];
+        $precorevenda   = $dados_detalhe["precorevenda"];
+        $precounitario  = $dados_detalhe["precounitario"];
+        $estoque        = $dados_detalhe["estoque"];
+        $imagemgrande   = $dados_detalhe["imagemgrande"];
     }
 ?>
-
 <!doctype html>
 <html>
     <head>
@@ -42,20 +42,21 @@
 
     <body>
         <?php include_once("../_incluir/topo.php"); ?>
-        <?php include_once("../_incluir/funcoes.php"); ?> 
+        <?php include_once("../_incluir/funcoes.php"); ?>
         
         <main>  
             <div id="detalhe_produto">
                 <ul>
-                    <li class="imagem"><img src="<?php echo $imagemgrande ?>" alt=""></li>
+                    <li class="imagem"><img src="<?php echo $imagemgrande ?>"></li>
                     <li><h2><?php echo $nomeproduto ?></h2></li>
-                    <li><?php echo $descriçao ?></li>
-                    <li>Código de Barra: <?php echo $codigobarra ?></li>
-                    <li>Tempo de entrega: <?php echo $tempoentrega ?></li>
-                    <li>Preço revenda: <?php echo real_format($precorevenda) ?></li>
-                    <li>Preço unitário: <?php echo real_format($precounitario) ?></li>
-                    <li>Estoque: <?php echo $estoque ?></li>
+                    <li><b>Descrição: </b><?php echo $descricao ?></li>
+                    <li><b>Código de Barra: </b><?php echo $codigobarra ?></li>
+                    <li><b>Tempo de Entrega: </b><?php echo $tempoentrega ?></li>
+                    <li><b>Preço Revenda: </b><?php echo real_format($precorevenda) ?></li>
+                    <li><b>Preço Unitário: </b><?php echo real_format($precounitario) ?></li>
+                    <li><b>Estoque: </b><?php echo $estoque ?></li>
                 </ul>
+               
             </div>
         </main>
 
