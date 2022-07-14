@@ -12,4 +12,4 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Demonstrativo:
 
-https://www.linkedin.com/feed/update/urn:li:activity:6952370392527192064/
+https://www.linkedin.com/feed/update/urn:li:ugcPost:6953140048846295040/
