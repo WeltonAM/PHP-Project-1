@@ -1,16 +1,21 @@
 <?php require_once("../../connection/conexao.php"); ?>
 
 <?php
+    session_start();
+
+    if(!isset($_SESSION["user_portal"])) {
+        header("location: login.php");
+    }
+
     // Determinar localidade BR
     setlocale(LC_ALL, 'pt_BR');
 
     // Consulta ao banco de dados
     $produtos = "SELECT produtoID, nomeproduto, tempoentrega, precounitario, imagempequena ";
-    $produtos .= " FROM produtos ";
-    
-    if(isset($_GET["produto"])){
+    $produtos .= "FROM produtos ";
+    if ( isset($_GET["produto"]) ) {
         $nome_produto = $_GET["produto"];
-        $produtos .= " WHERE nomeproduto LIKE '%{$nome_produto}%' ";
+        $produtos .= "WHERE nomeproduto LIKE '%{$nome_produto}%' ";
     }
     $resultado = mysqli_query($conecta, $produtos);
     if(!$resultado) {
@@ -33,15 +38,15 @@
         <?php include_once("../_incluir/topo.php"); ?>
         <?php include_once("../_incluir/funcoes.php"); ?>
         
-        <main>        
+        <main>
             <div id="janela_pesquisa">
                 <form action="listagem.php" method="get">
-                    <input type="text" name="produto" placeholder="Nome do produto">
-                    <input type="image" name="pesquisa" src="../_assets/botao_search.png">
+                    <input type="text" name="produto" placeholder="Pesquisa">
+                    <input type="image"  src="../_assets/botao_search.png">
                 </form>
             </div>
-
-           <div id="listagem_produtos"> 
+            
+            <div id="listagem_produtos"> 
             <?php
                 while($linha = mysqli_fetch_assoc($resultado)) {
             ?>
